@@ -110,3 +110,116 @@ give developers, QA, and managers a shared view of quality.
 Higher Confidence in Releases: By surfacing risk areas early, QAP
 helps ensure better-tested code reaches production, protecting client
 experience.
+
+
+
+new with hows:
+
+Risk & Control Goals
+
+2024 Risk & Control Goal
+
+My work on QAP directly supports Citi’s Risk & Control framework by
+improving visibility into testing and strengthening confidence in
+application quality.
+
+Goals:
+
+Understand Citi’s risk management approach and ensure QAP supports
+compliance and control visibility.
+
+Build features that highlight risk areas, coverage gaps, and failing
+tests to enable proactive issue detection.
+
+Ensure data presented in QAP is accurate, auditable, and aligns with
+governance standards.
+
+Provide features that make escalation and resolution of issues faster
+and more traceable.
+
+Stay up to date with risk, security, and compliance training to apply
+secure coding practices in both UI and backend work.
+
+How I Will Achieve This:
+
+Add visual indicators (badges, coverage warnings, failure trends) in dashboards.
+
+Provide filters for high-risk test cases or business-critical systems.
+
+Build exportable views for audit evidence.
+
+Add drill-down views for failures with logs and stack traces.
+
+Support JIRA integration so users can raise issues directly from test runs.
+
+Follow secure coding standards (input sanitization in Angular, request
+validation in Spring Boot).
+
+________________________________
+
+Financial Performance Goals
+
+Driving QA Efficiency Through QAP UI and Shared Libraries
+
+Goals:
+
+Build a modern, responsive Angular UI for QAP with dashboards,
+heatmaps, and data visualizations that help QA teams quickly access
+results.
+
+Collaborate on Spring Boot backend APIs to provide efficient,
+well-structured data to the UI.
+
+Contribute to reusable libraries and shared components to accelerate
+future development and reduce maintenance cost.
+
+How I Will Achieve This:
+
+Create dashboards with search, filtering, and drill-down features.
+
+Build interactive heatmaps and charts for pass/fail and coverage metrics.
+
+Work with backend developers to implement performant APIs with
+pagination and aggregation.
+
+Develop reusable Angular components (tables, filters, chart widgets)
+and contribute to shared Spring utilities.
+
+Use state management (e.g., NgRx) and lazy loading for performance optimization.
+
+________________________________
+
+Client & Franchise Outcomes Goals
+
+Enabling QA Teams with Better Tools and Insights
+
+Goals:
+
+Deliver an intuitive UI that makes it easy for QA and app teams to
+navigate test runs, failures, and trends.
+
+Provide advanced data visualization to help identify risk and coverage
+gaps quickly.
+
+Support onboarding of multiple app teams with a scalable, flexible UI
+and backend architecture.
+
+Collaborate with QA teams to improve their ability to test and analyze
+results using QAP.
+
+How I Will Achieve This:
+
+Build dashboards that highlight active test launches, recent failures,
+and coverage by module.
+
+Create heatmaps and historical trend charts for visualizing test
+health over time.
+
+Implement team-based filtering and multi-tenant views.
+
+Add onboarding flows or guides to help teams integrate with QAP.
+
+Write automated UI tests (Cypress/Playwright) to ensure QAP remains
+reliable across releases.
+
+Work closely with QA engineers to gather feedback and refine usability.
