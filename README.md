@@ -223,3 +223,23 @@ Write automated UI tests (Cypress/Playwright) to ensure QAP remains
 reliable across releases.
 
 Work closely with QA engineers to gather feedback and refine usability.
+
+
+-----
+
+Financial Performance Goals
+
+Goal:
+By the new year, QA Portal v2 will have a Minimal Viable Product (MVP) that delivers the same level of usability and accessibility as QA Portal v1, ensuring continuity for QA teams while setting the foundation for enhanced functionality and long-term financial sustainability.
+
+How We Will Achieve This:
+
+Efficient Resource Allocation – Focus on developing only the critical features that directly support core QA team workflows, avoiding unnecessary scope creep.
+
+Lean Development Approach – Use agile sprints to deliver incremental progress, ensuring rapid iterations and early validation of usability and accessibility.
+
+Cost Optimization – Reuse existing v1 assets (data models, workflows, and tested components) where possible to reduce development time and costs.
+
+Stakeholder Feedback Loops – Engage QA teams early with prototypes and usability tests to validate that the MVP matches the functionality of v1.
+
+Phased Rollout – Launch the MVP internally first, ensuring smooth adoption and gathering data to refine performance before wider release.
