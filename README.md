@@ -229,6 +229,8 @@ Work closely with QA engineers to gather feedback and refine usability.
 
 Financial Performance Goals
 
+Deliver MVP of QA Portal V2 with Equal Usability and Accessibility to V1 by New Year
+
 Goal:
 By the new year, QA Portal v2 will have a Minimal Viable Product (MVP) that delivers the same level of usability and accessibility as QA Portal v1, ensuring continuity for QA teams while setting the foundation for enhanced functionality and long-term financial sustainability.
 
