@@ -245,3 +245,41 @@ Cost Optimization – Reuse existing v1 assets (data models, workflows, and test
 Stakeholder Feedback Loops – Engage QA teams early with prototypes and usability tests to validate that the MVP matches the functionality of v1.
 
 Phased Rollout – Launch the MVP internally first, ensuring smooth adoption and gathering data to refine performance before wider release.
+
+
+
+
+
+
+---
+
+Strengthening Risk & Control Through a Secure, Tested QAP
+
+Goal:
+QA Portal V2 will be developed as a secure, thoroughly tested, and auditable system that directly supports Citi’s Risk & Control framework. By validating both frontend and backend features with automated testing, QAP will minimize risks, ensure compliance, and become the primary source of sign-off for material changes and releases.
+
+Goals:
+
+Prevent risk by embedding rigorous testing practices across QAP’s frontend and backend.
+
+Ensure every feature is validated through automated unit, integration, and end-to-end testing.
+
+Provide transparent, accurate, and auditable data that aligns with governance and compliance standards.
+
+Reduce the likelihood of control gaps by surfacing issues early through automated test coverage.
+
+Build confidence that QAP can serve as a trusted single source of truth for release approvals.
+
+How I Will Achieve This:
+
+Frontend Testing – Implement unit tests and end-to-end tests with Playwright to validate UI behavior, usability, and accessibility.
+
+Backend Testing – Apply unit tests, integration tests, and API validations to ensure business logic and data integrity are reliable.
+
+Continuous Quality Gates – Enforce automated checks and test coverage thresholds in the CI/CD pipeline to block untested or insecure code.
+
+Audit-Ready Evidence – Generate reports from test runs that can be directly used for audits and compliance reviews.
+
+Traceability & Escalation – Provide drill-down error details (logs, stack traces) and integrate with JIRA for issue tracking and escalation.
+
+Secure Development Practices – Apply strict standards across frontend and backend (e.g., input sanitization, request validation, dependency scanning) to prevent vulnerabilities and maintain compliance.
