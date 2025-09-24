@@ -1,316 +1,75 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { PaginationResponse } from '@datorama/akita';
-import { Observable } from 'rxjs';
-import { AppConfigService } from '../../config/app-config.service';
-import { tap } from 'rxjs/operators';
+Step 1: Create a reusable DTO
+import java.util.List;
 
-@Injectable({
-  providedIn: 'root',
-})
-export class ApiService {
-  constructor(private http: HttpClient, private config: AppConfigService) {}
+public class PaginatedResponse<T> {
+    private long total;          // total number of items
+    private int currentPage;     // current page number (0 or 1 based)
+    private int lastPage;        // total number of pages
+    private int perPage;         // items per page
+    private List<T> data;        // current page data
+    private boolean hasNext;
+    private boolean hasPrevious;
 
-  /**
-   * GET request for many items of the same type.
-   * @param entity GET request path added to base api url.
-   * @returns Returns an observable array of type specified.
-   */
-  public getMany<T>(entity: string, queryParams?: HttpParams): Observable<T[]> {
-    return this.http.get<T[]>(`${this.config.baseApiUrl}${entity}`, {
-      params: queryParams,
-    });
-  }
+    public PaginatedResponse() {}
 
-  /**
-   * GET request for a single item of the type specified.
-   * @param entity GET request path added to base api url.
-   * @returns Returns an observable of type specified.
-   */
-  public getSingle<T>(entity: string, queryParams?: HttpParams): Observable<T> {
-    return this.http.get<T>(`${this.config.baseApiUrl}${entity}`, {
-      params: queryParams,
-    });
-  }
+    public PaginatedResponse(long total, int currentPage, int lastPage,
+                             int perPage, List<T> data,
+                             boolean hasNext, boolean hasPrevious) {
+        this.total = total;
+        this.currentPage = currentPage;
+        this.lastPage = lastPage;
+        this.perPage = perPage;
+        this.data = data;
+        this.hasNext = hasNext;
+        this.hasPrevious = hasPrevious;
+    }
 
-  /** Returns an observable of type specified from baseUrl/entity/id */
-  public getById<T>(entity: string, id: string): Observable<T> {
-    return this.http.get<T>(`${this.config.baseApiUrl}${entity}/${id}`);
-  }
-
-  /** Returns a response type of blob from the API */
-  public downloadById(entity: string, id: string) {
-    return this.http.get(`${this.config.baseApiUrl}${entity}/${id}`, {
-      observe: 'response',
-      responseType: 'blob',
-    });
-  }
-
-  /**
-   * GET request to the API to fetch data by id in a paginated
-   * format. The response should have the same modal
-   * as akita's pagination response model which allows
-   * cacheing of the pages on the frontend.
-   * @param parentEntity GET request path added to base api url.
-   * @param parentId Id GET request path added to base api url.
-   * @param queryParams Query params to filter the paginated data from
-   * the API response.
-   * @returns Returns observable of type pagination response of generic type
-   * Observable<PaginationResponse<T>>
-   */
-  public getPaginatedDataById<T>(
-    parentEntity: string,
-    parentId: number | string,
-    queryParams?: HttpParams
-  ): Observable<PaginationResponse<T>> {
-    return this.http.get<PaginationResponse<T>>(
-      `${this.config.baseApiUrl}${parentEntity}/${parentId}`,
-      {
-        params: queryParams,
-      }
-    );
-  }
-
-  /**
-   * GET request to the API to fetch paginated data with the given ID, parent
-   * entity and child entity.
-   * @param parentEntity GET request path added to base api url.
-   * @param parentId ID added to base api url.
-   * @param childEntity Child entity path added to base api url.
-   * @param queryParams Query params to filter the paginated data from
-   * the API response.
-   * @returns Returns observable of type pagination response of generic type
-   * Observable<PaginationResponse<T>>
-   */
-  public getPaginatedDataByIdWithChildEntity<T>(
-    parentEntity: string,
-    parentId: number | string,
-    childEntity: string,
-    queryParams?: HttpParams
-  ): Observable<PaginationResponse<T>> {
-    return this.http.get<PaginationResponse<T>>(
-      `${this.config.baseApiUrl}${parentEntity}/${parentId}/${childEntity}`,
-      {
-        params: queryParams,
-      }
-    );
-  }
-
-  /** Returns an observable array of type specified from with sub entities */
-  public getForParentById<T>(
-    parentEntity: string,
-    parentId: number,
-    childEntity: string,
-    queryParams?: HttpParams
-  ): Observable<T> {
-    return this.http.get<T>(
-      `${this.config.baseApiUrl}${parentEntity}/${parentId}/${childEntity}`,
-      {
-        params: queryParams,
-      }
-    );
-  }
-
-  /**
-   * GET request to the API to fetch data in a paginated
-   * format. The response should have the same modal
-   * as akita's pagination response model which allows
-   * cacheing of the pages on the frontend.
-   * @param entity GET request path added to base api url.
-   * @param queryParams Query params to filter the paginated data from
-   * the API response.
-   * @returns Returns observable of type pagination response of generic type
-   * Observable<PaginationResponse<T>>
-   */
-  public getPaginatedData<T>(
-    entity: string,
-    queryParams?: HttpParams
-  ): Observable<PaginationResponse<T>> {
-    return this.http.get<PaginationResponse<T>>(
-      `${this.config.baseApiUrl}${entity}`,
-      {
-        params: queryParams,
-      }
-    );
-  }
-
-  /**
-   * DELETE request for single item of the type specified.
-   * @param entity DELETE request path added to base api url.
-   * @param id ID of item being deleted.
-   * @returns DELETE request.
-   */
-  public deleteSingle(entity: string, id: any, queryParams?: HttpParams) {
-    return this.http.delete(`${this.config.baseApiUrl}${entity}/${id}`, {
-      params: queryParams,
-    });
-  }
-
-  /**
-   * DELETE request a single item, based on a sub entity of
-   * a parent entity.
-   * @param parentEntity
-   * @param parentId
-   * @param childEntity
-   * @param childId
-   * @returns
-   */
-  public deleteForParentByChildId(
-    parentEntity: string,
-    parentId: number,
-    childEntity: string,
-    childId: number
-  ) {
-    return this.http.delete(
-      `${this.config.baseApiUrl}${parentEntity}/${parentId}/${childEntity}/${childId}`
-    );
-  }
-
-  /**
-   * POST request for single item of the type specified.
-   * @param entity POST request path added to base api url.
-   * @param item Item/body which is being created.
-   * @returns POST request.
-   */
-  public postSingle<T>(entity: string, item: T): Observable<T> {
-    return this.http.post<T>(`${this.config.baseApiUrl}${entity}`, item);
-  }
-
-  /**
-   * POST request for single item of the type specified and returns a list of the specified type
-   * @param entity POST request path added to base api url.
-   * @param item Item/body which is being created.
-   * @returns POST request.
-   */
-  public postSingleGetMany<T>(entity: string, item: T): Observable<T[]> {
-    return this.http.post<T[]>(`${this.config.baseApiUrl}${entity}`, item);
-  }
-
-  /**
-   * POST request for many item of the type specified.
-   * @param entity POST request path added to base api url.
-   * @param item Item/body which is being created.
-   * @returns POST request.
-   */
-  public postMany<T>(entity: string, item: any): Observable<T[]> {
-    return this.http.post<T[]>(`${this.config.baseApiUrl}${entity}`, item);
-  }
-
-  /**
-   * POST request for single item of the type specified.
-   * @param entity POST request path added to base api url.
-   * @param item Item/body which is being created.
-   * @param queryParams Optional query parameters for request
-   * @returns POST request.
-   */
-  public post<T>(
-    entity: string,
-    item: any,
-    queryParams?: HttpParams
-  ): Observable<T> {
-    return this.http.post<T>(`${this.config.baseApiUrl}${entity}`, item, {
-      params: queryParams,
-    });
-  }
-
-  /**
-   * POST request for parent entity by a child entities ID
-   * @param entity Parent entity of request
-   * @param parentId ID of parent item
-   * @param childEntity Child entity of request
-   * @param childId ID of child item
-   * @param requestBody Request body which can be null or have data
-   * @returns Request to POST with a parent and child entity and ID.
-   */
-  public postForParentByChildId<T>(
-    entity: string,
-    parentId: number,
-    childEntity: string,
-    childId: number,
-    additionalPath: string | undefined,
-    requestBody: T | null
-  ): Observable<T> {
-    return this.http.post<T>(
-      `${
-        this.config.baseApiUrl
-      }${entity}/${parentId}/${childEntity}/${childId}${
-        additionalPath ? '/' + additionalPath : ''
-      }`,
-      requestBody
-    );
-  }
-
-  /** Puts the given item to baseUrl/entity/id and returns an observable of the same type */
-  public put<T>(
-    entity: string,
-    id: any,
-    item: T,
-    additionalPath?: string
-  ): Observable<any> {
-    return this.http.put<T>(
-      `${this.config.baseApiUrl}${entity}/${id}${
-        additionalPath ? '/' + additionalPath : ''
-      }`,
-      item
-    );
-  }
-
-  /**
-   * Put request for many item of the type specified.
-   * @param entity Put request path added to base api url.
-   * @param item Item/body which is being created.
-   * @returns Put request.
-   */
-  public putMany<T>(entity: string, item: any): Observable<T[]> {
-    return this.http.put<T[]>(`${this.config.baseApiUrl}${entity}`, item);
-  }
-
-  /**
-   * @param entity Parent entity of request.
-   * @param id ID of parent item.
-   * @param childEntity Child entity of request.
-   * @param queryParams Query params to filter the data from.
-   * @returns a response type of blob from the API
-   */
-
-  public downloadExportedData(
-    entity: string,
-    id: number | string,
-    queryParams: HttpParams,
-    childEntity: string
-  ) {
-    const options = { responseType: 'blob' as 'json', params: queryParams };
-    return this.http
-      .get(
-        `${this.config.baseApiUrl}${entity}/${id}/${childEntity}/exportCsv`,
-        options
-      )
-      .pipe(
-        tap((res) => {
-          const data = window.URL.createObjectURL(res as Blob);
-          const link = document.createElement('a');
-          link.href = data;
-          link.download = `${entity}Id${id}${childEntity}.csv`;
-          link.click();
-        })
-      );
-  }
-
-  /**
-   * @param entity entity of request.
-   * @param queryParams Query params to filter the data from.
-   * @returns a response type of blob from the API. Will return csv template to upload.
-   */
-  public downloadCsvTemplate(entity: string, queryParams: HttpParams) {
-    const options = { responseType: 'blob' as 'json', params: queryParams };
-    return this.http.get(`${this.config.baseApiUrl}${entity}`, options).pipe(
-      tap((res) => {
-        const data = window.URL.createObjectURL(res as Blob);
-        const link = document.createElement('a');
-        link.href = data;
-        link.download = `${entity}.csv`;
-        link.click();
-      })
-    );
-  }
+    // getters and setters ...
 }
+
+Step 2: Add a mapper from Page<T>
+import org.springframework.data.domain.Page;
+
+public class PaginatedResponseMapper {
+    public static <T> PaginatedResponse<T> from(Page<T> page) {
+        return new PaginatedResponse<>(
+                page.getTotalElements(),
+                page.getNumber() + 1,            // convert from 0-based to 1-based
+                page.getTotalPages(),
+                page.getSize(),
+                page.getContent(),
+                page.hasNext(),
+                page.hasPrevious()
+        );
+    }
+}
+
+Step 3: Use in a Controller
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+    private final UserRepository userRepository;
+
+    public UserController(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @GetMapping
+    public PaginatedResponse<User> getUsers(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Page<User> usersPage = userRepository.findAll(PageRequest.of(page - 1, size));
+
+        return PaginatedResponseMapper.from(usersPage);
+    }
+}
+
+
+✅ Now you have a generic, reusable paginated DTO that works with any repository/entity.
+Just call PaginatedResponseMapper.from(page) wherever you need pagination in your API.
